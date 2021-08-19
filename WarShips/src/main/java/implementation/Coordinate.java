@@ -30,15 +30,15 @@ public class Coordinate {
         return y < Board.SIZE - 1;
     }
 
-    protected boolean canTwoMoveDown() {
+    protected boolean canMoveTwoDown() {
         return y < Board.SIZE - 2;
     }
 
-    protected boolean canThreeMoveDown() {
+    protected boolean canMoveThreeDown() {
         return y < Board.SIZE - 3;
     }
 
-    protected boolean canFourMoveDown() {
+    protected boolean canMoveFourDown() {
         return y < Board.SIZE - 4;
     }
 

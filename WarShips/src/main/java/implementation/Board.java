@@ -18,6 +18,14 @@ public class Board {
         return new BoardIterator();
     }
 
+    public void setElementAt(int i, Coordinate coordinate){
+        tab[coordinate.getX()][coordinate.getY()] = i;
+    }
+
+    public int getElementAt(Coordinate coordinate){
+        return tab[coordinate.getX()][coordinate.getY()];
+    }
+
     class BoardIterator implements Iterator<Coordinate> {
 
         Coordinate currentCoordinate = new Coordinate(-1, 0);
@@ -33,9 +41,11 @@ public class Board {
                 if (currentCoordinate.canMoveRight()) {
                     currentCoordinate.setX(currentCoordinate.getX()+1);
                 }
-                else if(currentCoordinate.canMoveDown()){
-                    currentCoordinate.setX(0);
-                    currentCoordinate.setY(currentCoordinate.getY()+1);
+                else{
+                    if(currentCoordinate.canMoveDown()) {
+                        currentCoordinate.setX(0);
+                        currentCoordinate.setY(currentCoordinate.getY() + 1);
+                    }
                 }
                 return currentCoordinate;
             }
