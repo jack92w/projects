@@ -100,9 +100,9 @@ public class BoardManager {
     }
 
     /**
-     * if field on coordinate is not zero method insertShip will be call again
-     *
-     * @param coordinateSet fields on coordinates to be changed
+     * checks if field on coordinates are zero
+     * @param coordinateSet to be checked
+     * @return true if all fields are zero
      */
     protected boolean confirmIfFieldsAreZero(Set<Coordinate> coordinateSet) {
         boolean isZero = true;
