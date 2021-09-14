@@ -100,7 +100,7 @@ public class BoardManager {
     }
 
     /**
-     * checks if field on coordinates are zero
+     * checks if fields on coordinates are zero
      * @param coordinateSet to be checked
      * @return true if all fields are zero
      */
