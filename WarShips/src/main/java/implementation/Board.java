@@ -36,6 +36,9 @@ public class Board {
         return this.tab[coordinate.getX()][coordinate.getY()];
     }
 
+    /**
+     * class was prepared to help iterate through board
+     */
     static class BoardIterator implements Iterator<Coordinate> {
 
         Coordinate currentCoordinate = new Coordinate(-1, 0);
