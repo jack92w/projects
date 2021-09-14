@@ -18,15 +18,25 @@ public class Board {
         return new BoardIterator();
     }
 
-    public void setElementAt(int i, Coordinate coordinate){
-        tab[coordinate.getX()][coordinate.getY()] = i;
+    /**
+     * sets number at coordinate
+     * @param i number to be set
+     * @param coordinate for number to be set
+     */
+    public void setNumberAt(int i, Coordinate coordinate){
+        this.tab[coordinate.getX()][coordinate.getY()] = i;
     }
 
-    public int getElementAt(Coordinate coordinate){
-        return tab[coordinate.getX()][coordinate.getY()];
+    /**
+     * gets number from coordinate
+     * @param coordinate - number localization
+     * @return number from coordinate
+     */
+    public int getNumberAt(Coordinate coordinate){
+        return this.tab[coordinate.getX()][coordinate.getY()];
     }
 
-    class BoardIterator implements Iterator<Coordinate> {
+    static class BoardIterator implements Iterator<Coordinate> {
 
         Coordinate currentCoordinate = new Coordinate(-1, 0);
 
