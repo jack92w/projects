@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import static java.lang.System.*;
+import static java.lang.System.out;
 
 public class BoardManager {
 
@@ -57,38 +57,7 @@ public class BoardManager {
         }
     }
 
-    /**
-     * base on masts quantity inserting ships
-     *
-     * @param mastQuantity of ship
-     */
-   protected void insertShip(int mastQuantity) {
-        Plane plane = Plane.randomPlane();
-        int x = chooseNum();
-        int y = chooseNum();
-        Set<Coordinate> coordinateSet;
-        Coordinate coordinate = new Coordinate(x, y);
-        if (plane.equals(Plane.HORIZONTAL)) {
-            if (baseOnMastQuantityConfirmIfCanInsertShipRight(coordinate, mastQuantity)) {
-                coordinateSet = createCoordinateSetHorizontal(coordinate, mastQuantity);
-                if (confirmIfFieldsAreZero(coordinateSet)) {
-                    insertShip(mastQuantity);
-                } else {
-                    changeFields(coordinateSet, mastQuantity);
-                }
-            } else insertShip(mastQuantity);
-        } else {
-            if (baseOnMastQuantityConfirmIfCanInsertShipDown(coordinate, mastQuantity)) {
-                coordinateSet = createCoordinateSetVertical(coordinate, mastQuantity);
-                if (confirmIfFieldsAreZero(coordinateSet)) {
-                    insertShip(mastQuantity);
-                } else {
-                    changeFields(coordinateSet, mastQuantity);
-                }
-            } else insertShip(mastQuantity);
-        }
-    }
-   /* protected void insertShip(int mastQuantity) {
+    protected void insertShip(int mastQuantity) {
         Plane plane = Plane.randomPlane();
         int x = chooseNum();
         int y = chooseNum();
@@ -97,56 +66,24 @@ public class BoardManager {
         if (baseOnMastQuantityConfirmIfCanInsertShip(coordinate, mastQuantity, plane)) {
             coordinateSet = createCoordinateSet(coordinate, mastQuantity, plane);
             if (confirmIfFieldsAreZero(coordinateSet)) {
-                insertShip(mastQuantity);
-            } else {
                 changeFields(coordinateSet, mastQuantity);
+            } else {
+                insertShip(mastQuantity);
             }
         } else {
             insertShip(mastQuantity);
         }
-    }*/
-
-
-
-        /*if (plane.equals(Plane.HORIZONTAL)) {
-            if (baseOnMastQuantityConfirmIfCanInsertShipRight(coordinate, mastQuantity)) {
-                coordinateSet = createCoordinateSetHorizontal(coordinate, mastQuantity);
-                if (confirmIfFieldsAreZero(coordinateSet)) {
-                    insertShip(mastQuantity);
-                } else {
-                    changeFields(coordinateSet, mastQuantity);
-                }
-            } else insertShip(mastQuantity);
-        } else {
-            if (baseOnMastQuantityConfirmIfCanInsertShipDown(coordinate, mastQuantity)) {
-                coordinateSet = createCoordinateSetVertical(coordinate, mastQuantity);
-                if (confirmIfFieldsAreZero(coordinateSet)) {
-                    insertShip(mastQuantity);
-                } else {
-                    changeFields(coordinateSet, mastQuantity);
-                }
-            } else insertShip(mastQuantity);
-        }
-    }*/
-
-    /**
-     * creates set of horizontal coordinate
-     *
-     * @param coordinate   - starting point
-     * @param mastQuantity of ship
-     * @return set of coordinate
-     */
-  Set<Coordinate> createCoordinateSetHorizontal(Coordinate coordinate, int mastQuantity) {
-        if (mastQuantity > 1) {
-            Set<Coordinate> coordinateSet = new HashSet<>();
-            for (int i = 0; i < mastQuantity; i++) {
-                coordinateSet.add(new Coordinate(coordinate.getX() + i, coordinate.getY()));
-            }
-            return coordinateSet;
-        } else throw new IllegalArgumentException();
     }
 
-   /* Set<Coordinate> createCoordinateSet(Coordinate coordinate, int mastQuantity, Plane plane) {
+    /**
+     * creates coordinate set for ship insertion
+     *
+     * @param coordinate   of ship beginning
+     * @param mastQuantity of ship
+     * @param plane        of ship direction
+     * @return ship coordinate
+     */
+    Set<Coordinate> createCoordinateSet(Coordinate coordinate, int mastQuantity, Plane plane) {
         if (mastQuantity > 1) {
             Set<Coordinate> coordinateSet = new HashSet<>();
             if (plane == Plane.HORIZONTAL) {
@@ -157,23 +94,6 @@ public class BoardManager {
                 for (int i = 0; i < mastQuantity; i++) {
                     coordinateSet.add(new Coordinate(coordinate.getX(), coordinate.getY() + i));
                 }
-            }
-            return coordinateSet;
-        } else throw new IllegalArgumentException();
-    }*/
-
-    /**
-     * creates set of vertical coordinate
-     *
-     * @param coordinate   - starting point
-     * @param mastQuantity of ship
-     * @return set of coordinate
-     */
-    Set<Coordinate> createCoordinateSetVertical(Coordinate coordinate, int mastQuantity) {
-        if (mastQuantity > 1) {
-            Set<Coordinate> coordinateSet = new HashSet<>();
-            for (int i = 0; i < mastQuantity; i++) {
-                coordinateSet.add(new Coordinate(coordinate.getX(), coordinate.getY() + i));
             }
             return coordinateSet;
         } else throw new IllegalArgumentException();
@@ -192,7 +112,7 @@ public class BoardManager {
                 isZero = false;
             }
         }
-        return !isZero;
+        return isZero;
     }
 
     /**
@@ -208,53 +128,31 @@ public class BoardManager {
     }
 
     /**
+     * confirms if inserting ships is possible
+     *
      * @param coordinate   of ship beginning
      * @param mastQuantity of ship
-     * @return true if it is possible to insert ship on the right
+     * @param plane        of ship direction
+     * @return true if insertion is possible
      */
-    protected boolean baseOnMastQuantityConfirmIfCanInsertShipRight(Coordinate coordinate, int mastQuantity) {
-        return switch (mastQuantity) {
-            case TWO_MASTED -> coordinate.canMoveRight();
-            case THREE_MASTED -> coordinate.canMoveTwoRight();
-            case FOUR_MASTED -> coordinate.canMoveThreeRight();
-            case FIVE_MASTED -> coordinate.canMoveFourRight();
-            default -> false;
-        };
-    }
-
-    /**
-     * @param coordinate   of ship beginning
-     * @param mastQuantity of ship
-     * @return true if it is possible to insert ship on down
-     */
-    protected boolean baseOnMastQuantityConfirmIfCanInsertShipDown(Coordinate coordinate, int mastQuantity) {
-        return switch (mastQuantity) {
-            case TWO_MASTED -> coordinate.canMoveDown();
-            case THREE_MASTED -> coordinate.canMoveTwoDown();
-            case FOUR_MASTED -> coordinate.canMoveThreeDown();
-            case FIVE_MASTED -> coordinate.canMoveFourDown();
-            default -> false;
-        };
-    }
-
     protected boolean baseOnMastQuantityConfirmIfCanInsertShip(Coordinate coordinate, int mastQuantity, Plane plane) {
         return switch (mastQuantity) {
             case TWO_MASTED -> {
-                if (plane == Plane.HORIZONTAL) {
+                if (plane == Plane.VERTICAL) {
                     yield coordinate.canMoveDown();
                 } else {
                     yield coordinate.canMoveRight();
                 }
             }
             case THREE_MASTED -> {
-                if (plane == Plane.HORIZONTAL) {
+                if (plane == Plane.VERTICAL) {
                     yield coordinate.canMoveTwoDown();
                 } else {
                     yield coordinate.canMoveTwoRight();
                 }
             }
             case FOUR_MASTED -> {
-                if (plane == Plane.HORIZONTAL) {
+                if (plane == Plane.VERTICAL) {
                     yield coordinate.canMoveThreeDown();
                 } else {
                     yield coordinate.canMoveThreeRight();
@@ -263,7 +161,7 @@ public class BoardManager {
 
             case FIVE_MASTED -> {
                 if
-                (plane == Plane.HORIZONTAL) {
+                (plane == Plane.VERTICAL) {
                     yield coordinate.canMoveFourDown();
                 } else {
                     yield coordinate.canMoveFourRight();
