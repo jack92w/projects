@@ -12,6 +12,10 @@ public enum Plane {
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
 
+    /**
+     * chooses random plane
+     * @return plane
+     */
     public static Plane randomPlane() {
         return VALUES.get(RANDOM.nextInt(SIZE));
     }
