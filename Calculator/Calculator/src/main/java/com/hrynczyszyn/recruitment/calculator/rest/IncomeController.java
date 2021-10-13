@@ -5,11 +5,13 @@ import com.hrynczyszyn.recruitment.calculator.entity.Income;
 import com.hrynczyszyn.recruitment.calculator.mapper.Mapper;
 import com.hrynczyszyn.recruitment.calculator.repository.IncomeRepository;
 import com.hrynczyszyn.recruitment.calculator.service.IncomeCalculatorService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 public class IncomeController {
@@ -32,5 +34,10 @@ public class IncomeController {
         Income incomeToBeSaved = mapper.mapToEntity(dto);
         incomeRepository.save(incomeToBeSaved);
         return incomeValue;
+    }
+
+    @GetMapping("/last_five")
+    public List<Income> getLastFive(){
+        return incomeRepository.findLastFiveRecords();
     }
 }
