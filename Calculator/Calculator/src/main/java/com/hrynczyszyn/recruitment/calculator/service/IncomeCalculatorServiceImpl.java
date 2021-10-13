@@ -1,7 +1,10 @@
 package com.hrynczyszyn.recruitment.calculator.service;
 
+import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 
+@Service
 public class IncomeCalculatorServiceImpl implements IncomeCalculatorService {
 
     static final BigDecimal VAT = new BigDecimal("0.18");
@@ -9,6 +12,6 @@ public class IncomeCalculatorServiceImpl implements IncomeCalculatorService {
 
     @Override
     public BigDecimal calculateIncome(BigDecimal moneyAmount) {
-        return moneyAmount.subtract(ZUS.subtract(VAT.multiply(moneyAmount)));
+        return moneyAmount.subtract(VAT.multiply(moneyAmount)).subtract(ZUS);
     }
 }
