@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 @Service
 public class IncomeCalculatorServiceImpl implements IncomeCalculatorService {
 
-    static final BigDecimal VAT = new BigDecimal("0.18");
+    static final BigDecimal PIT = new BigDecimal("0.19");
     static final BigDecimal ZUS = new BigDecimal("1380.18");
 
     @Override
     public BigDecimal calculateIncome(BigDecimal moneyAmount) {
-        return moneyAmount.subtract(VAT.multiply(moneyAmount)).subtract(ZUS);
+        return moneyAmount.subtract(PIT.multiply(moneyAmount)).subtract(ZUS);
     }
 }
