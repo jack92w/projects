@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -12,12 +13,14 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity(name = "income_tbl")
 public class Income {
+
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false)
     private Long id;
 
