@@ -1,6 +1,5 @@
 package com.hrynczyszyn.recruitment.calculator.repository;
 
-import com.hrynczyszyn.recruitment.calculator.exception.NotEnoughIncomesException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ class IncomeRepositoryTest {
     }
 
     @Test
-    void shouldReturnProperIncomes() throws NotEnoughIncomesException {
+    void shouldReturnProperQuantityOfIncomes() {
         //given
         final int five = 5;
         BigDecimal in1 = new BigDecimal("10000");
@@ -35,19 +34,29 @@ class IncomeRepositoryTest {
         repository.saveIncome(in5);
         repository.saveIncome(in6);
         //when
-        List<BigDecimal> actualIncomeList = repository.getLastFiveIncomes();
+        List<BigDecimal> actualIncomeList = repository.getLastIncomes(five);
         //then
         Assertions.assertEquals(expectedIncomeList, actualIncomeList);
         Assertions.assertEquals(five, actualIncomeList.size());
     }
 
+    //clear was added in case of all test will be run at once
     @Test
     void shouldThrowNotEnoughIncomesException() {
         //given
+        repository.clearIncomes();
+        final int nine = 9;
+        final int expectedSize = 2;
         BigDecimal in1 = new BigDecimal("10000");
+        BigDecimal in2 = new BigDecimal("20000");
+        List<BigDecimal> expectedIncomeList = List.of(in1, in2);
         repository.saveIncome(in1);
+        repository.saveIncome(in2);
+
         //when
+        List<BigDecimal> actualIncomeList = repository.getLastIncomes(nine);
         //then
-        Assertions.assertThrows(NotEnoughIncomesException.class, ()-> repository.getLastFiveIncomes());
+        Assertions.assertEquals(expectedIncomeList, actualIncomeList);
+        Assertions.assertEquals(expectedSize, actualIncomeList.size());
     }
 }
