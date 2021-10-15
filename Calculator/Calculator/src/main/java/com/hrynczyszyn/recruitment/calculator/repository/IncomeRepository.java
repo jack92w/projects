@@ -16,7 +16,6 @@ public class IncomeRepository {
     }
 
     /**
-     *
      * @return list of incomes
      */
     public List<BigDecimal> getIncomes() {
@@ -25,20 +24,26 @@ public class IncomeRepository {
 
     /**
      * gets last five calculated incomes; if quantity of incomes is less than 5 it gets quantity
+     *
      * @return calculated incomes
      */
-    public List<BigDecimal> getLastFiveIncomes() {
+    public List<BigDecimal> getLastIncomes(int lastNumber) {
         List<BigDecimal> incomeList = new ArrayList<>();
-        if (incomes.size() >= 5) {
-            int limit = incomes.size()-1;
-            int index = limit - 4;
+        if (incomes.size() >= lastNumber) {
+            int limit = incomes.size() - 1;
+            int index = limit - lastNumber + 1;
             for (int i = index; i <= limit; i++) {
                 incomeList.add(incomes.get(i));
             }
-            return incomeList;
-        } else {
-            return incomes;
         }
 
+        else {
+            incomeList.addAll(incomes);
+        }
+        return incomeList;
+    }
+
+    protected void clearIncomes(){
+        incomes.clear();
     }
 }
