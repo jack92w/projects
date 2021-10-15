@@ -1,16 +1,33 @@
 package com.hrynczyszyn.recruitment.calculator.repository;
 
-import com.hrynczyszyn.recruitment.calculator.entity.Income;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-public interface IncomeRepository extends JpaRepository<Income, Long> {
+public class IncomeRepository {
 
-    @Query("SELECT income_amount FROM income_tbl ORDER BY id DESC")
-    List<Income> findLastFiveRecords();
+    private static final List<BigDecimal> incomes = new ArrayList<>();
 
+    public void saveIncome(BigDecimal income) {
+        incomes.add(income);
+    }
+
+    public List<BigDecimal> getIncomes() {
+        return incomes;
+    }
+
+    public List<BigDecimal> calcIncomes() {
+        List<BigDecimal> incomeList = new ArrayList<>();
+        if (incomes.size() >= 5) {
+            int limit = incomes.size()-1;
+            int index = limit - 5;
+            for (int i = index; i <= limit; i++) {
+                incomeList.add(incomes.get(i));
+            }
+            return incomeList;
+        } else {
+            return incomes;
+        }
+
+    }
 }
