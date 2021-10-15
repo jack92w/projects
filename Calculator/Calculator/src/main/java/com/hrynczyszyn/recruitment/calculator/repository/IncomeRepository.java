@@ -16,7 +16,7 @@ public class IncomeRepository {
         return incomes;
     }
 
-    public List<BigDecimal> calcIncomes() {
+    public List<BigDecimal> getLastFiveIncomes() {
         List<BigDecimal> incomeList = new ArrayList<>();
         if (incomes.size() >= 5) {
             int limit = incomes.size()-1;
