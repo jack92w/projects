@@ -1,6 +1,0 @@
-DROP TABLE IF EXISTS income_tbl;
-
-CREATE TABLE income_tbl (
-  id INT AUTO_INCREMENT  PRIMARY KEY,
-  first_name DECIMAL(15,2) NOT NULL
-);

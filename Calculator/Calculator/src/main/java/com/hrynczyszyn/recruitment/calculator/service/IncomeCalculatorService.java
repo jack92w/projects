@@ -6,6 +6,7 @@ public interface IncomeCalculatorService {
 
     /**
      * calculates income
+     *
      * @param moneyAmount input for calculation
      * @return income
      */

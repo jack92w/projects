@@ -1,5 +1,6 @@
 package com.hrynczyszyn.recruitment.calculator.repository;
 
+import com.hrynczyszyn.recruitment.calculator.income.Income;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,24 +18,24 @@ class IncomeRepositoryTest {
     }
 
     @Test
-    void shouldReturnProperQuantityOfIncomes() {
+    void shouldReturnProperQuantityOfIncomesWhenListSizeIsBiggerThanGivenParam() {
         //given
         final int five = 5;
-        BigDecimal in1 = new BigDecimal("10000");
-        BigDecimal in2 = new BigDecimal("20000");
-        BigDecimal in3 = new BigDecimal("30000");
-        BigDecimal in4 = new BigDecimal("40000");
-        BigDecimal in5 = new BigDecimal("50000");
-        BigDecimal in6 = new BigDecimal("60000");
-        List<BigDecimal> expectedIncomeList = List.of(in2, in3, in4, in5, in6);
-        repository.saveIncome(in1);
-        repository.saveIncome(in2);
-        repository.saveIncome(in3);
-        repository.saveIncome(in4);
-        repository.saveIncome(in5);
-        repository.saveIncome(in6);
+        Income income1 = new Income(new BigDecimal("10000"));
+        Income income2 = new Income(new BigDecimal("20000"));
+        Income income3 = new Income(new BigDecimal("30000"));
+        Income income4 = new Income(new BigDecimal("40000"));
+        Income income5 = new Income(new BigDecimal("50000"));
+        Income income6 = new Income(new BigDecimal("60000"));
+        List<Income> expectedIncomeList = List.of(income2, income3, income4, income5, income6);
+        repository.saveIncome(income1);
+        repository.saveIncome(income2);
+        repository.saveIncome(income3);
+        repository.saveIncome(income4);
+        repository.saveIncome(income5);
+        repository.saveIncome(income6);
         //when
-        List<BigDecimal> actualIncomeList = repository.getLastIncomes(five);
+        List<Income> actualIncomeList = repository.getLastIncomes(five);
         //then
         Assertions.assertEquals(expectedIncomeList, actualIncomeList);
         Assertions.assertEquals(five, actualIncomeList.size());
@@ -42,19 +43,18 @@ class IncomeRepositoryTest {
 
     //clear was added in case of all test will be run at once
     @Test
-    void shouldThrowNotEnoughIncomesException() {
+    void shouldReturnProperQuantityOfIncomesWhenListSizeIsLessThanGivenParam() {
         //given
         repository.clearIncomes();
         final int nine = 9;
         final int expectedSize = 2;
-        BigDecimal in1 = new BigDecimal("10000");
-        BigDecimal in2 = new BigDecimal("20000");
-        List<BigDecimal> expectedIncomeList = List.of(in1, in2);
-        repository.saveIncome(in1);
-        repository.saveIncome(in2);
-
+        Income income1 = new Income(new BigDecimal("10000"));
+        Income income2 = new Income(new BigDecimal("20000"));
+        List<Income> expectedIncomeList = List.of(income1, income2);
+        repository.saveIncome(income1);
+        repository.saveIncome(income2);
         //when
-        List<BigDecimal> actualIncomeList = repository.getLastIncomes(nine);
+        List<Income> actualIncomeList = repository.getLastIncomes(nine);
         //then
         Assertions.assertEquals(expectedIncomeList, actualIncomeList);
         Assertions.assertEquals(expectedSize, actualIncomeList.size());

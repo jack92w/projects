@@ -11,12 +11,12 @@ class IncomeCalculatorServiceImplTest {
     private IncomeCalculatorService incomeCalculatorService;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         incomeCalculatorService = new IncomeCalculatorServiceImpl();
     }
 
     @Test
-    void shouldReturnProperValue(){
+    void shouldReturnProperValue() {
         //given
         final BigDecimal value = new BigDecimal("10000");
         final BigDecimal expected = new BigDecimal("6719.82");
@@ -27,7 +27,7 @@ class IncomeCalculatorServiceImplTest {
     }
 
     @Test
-    void shouldReturnResultLessThanZero(){
+    void shouldReturnResultLessThanZero() {
         //given
         final BigDecimal value = new BigDecimal("1380.18");
         final BigDecimal expected = new BigDecimal("-262.2342");

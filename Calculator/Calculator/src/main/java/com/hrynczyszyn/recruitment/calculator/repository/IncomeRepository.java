@@ -1,49 +1,47 @@
 package com.hrynczyszyn.recruitment.calculator.repository;
 
+import com.hrynczyszyn.recruitment.calculator.income.Income;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class IncomeRepository {
 
-    private static final List<BigDecimal> incomes = new ArrayList<>();
+    private static final List<Income> incomes = new ArrayList<>();
 
-    public void saveIncome(BigDecimal income) {
+    public void saveIncome(Income income) {
         incomes.add(income);
     }
 
     /**
      * @return list of incomes
      */
-    public List<BigDecimal> getIncomes() {
+    public List<Income> getIncomes() {
         return incomes;
     }
 
     /**
-     * gets last five calculated incomes; if quantity of incomes is less than 5 it gets quantity
+     * gets last calculated incomes; if quantity of incomes is less than given number it gets all objects
      *
      * @return calculated incomes
      */
-    public List<BigDecimal> getLastIncomes(int lastNumber) {
-        List<BigDecimal> incomeList = new ArrayList<>();
+    public List<Income> getLastIncomes(int lastNumber) {
+        List<Income> incomeList = new ArrayList<>();
         if (incomes.size() >= lastNumber) {
-            int limit = incomes.size() - 1;
-            int index = limit - lastNumber + 1;
-            for (int i = index; i <= limit; i++) {
+            int limit = incomes.size();
+            int index = limit - lastNumber;
+            for (int i = index; i < limit; i++) {
                 incomeList.add(incomes.get(i));
             }
-        }
-
-        else {
+        } else {
             incomeList.addAll(incomes);
         }
         return incomeList;
     }
 
-    protected void clearIncomes(){
+    protected void clearIncomes() {
         incomes.clear();
     }
 }
